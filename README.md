@@ -4,7 +4,7 @@
 
 Clone project
 ```
-git clone git@github.com:taranovegor/nagan-bot
+git clone git@github.com:taranovegor/naganbot
 ```
 
 Create a local environment variables file
