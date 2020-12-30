@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine AS build
+FROM php:8.0-fpm-alpine AS build
 
 ARG TZ=UTC
 ARG UID=1000
@@ -8,7 +8,7 @@ RUN apk update && apk add --no-cache shadow git libzip-dev icu-dev
 
 RUN docker-php-ext-install zip pdo_mysql intl
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN rm -rf /var/lib/{apk}/
 
