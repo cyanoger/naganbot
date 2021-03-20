@@ -13,3 +13,7 @@ services:
     mysql:
         ports:
             - ${MYSQL_EXPOSE_PORT}:3306
+
+    rabbitmq:
+        image: rabbitmq:3.8-alpine
+        container_name: nagan_bot_rabbitmq

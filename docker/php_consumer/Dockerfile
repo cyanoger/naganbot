@@ -28,3 +28,4 @@ RUN apk update && apk add --no-cache $PHPIZE_DEPS
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 USER www-data:www-data
+
