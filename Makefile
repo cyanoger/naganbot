@@ -3,6 +3,10 @@
 DOCKER_COMPOSE_OPTIONS = -f docker-compose.yaml
 DOCKER_COMPOSE = docker-compose $(DOCKER_COMPOSE_OPTIONS)
 
+ifeq ($(ENV), 'dev')
+	DOCKER_COMPOSE_OPTIONS = $(DOCKER_COMPOSE_OPTIONS) -f docker-compose.$(ENV).yaml
+endif
+
 help: ## Displays help for a command
 	@printf "\033[33mUsage:\033[0m\n  make [options] [target] ...\n\n\033[33mAvailable targets:%-13s\033[0m\n"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' 'Makefile' | awk 'BEGIN {FS = ":.*?## "}; {printf "%-2s\033[32m%-17s\033[0m %s\n", "", $$1, $$2}'
