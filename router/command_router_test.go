@@ -5,23 +5,46 @@ import (
 	"testing"
 )
 
+const (
+	TestHandlerName = "test"
+)
+
 type testHandler struct {
 	InterfaceCommandHandler
 }
 
 func (handler testHandler) Name() string {
-	return "test"
+	return TestHandlerName
 }
 
 func (handler testHandler) Execute(update tgbotapi.Update) error {
 	return nil
 }
 
-func TestNewCommandRouter(t *testing.T) {
+func newTestCommandRouter() CommandRouter {
 	handler := testHandler{}
 	router := NewCommandRouter(new(tgbotapi.BotAPI), handler)
 
-	if routerHandler, handlerExists := router.handlers[handler.Name()]; !handlerExists || handler.Name() != routerHandler.Name() {
+	return router
+}
+
+func TestNewCommandRouter(t *testing.T) {
+	router := newTestCommandRouter()
+
+	if routerHandler, handlerExists := router.handlers[TestHandlerName]; !handlerExists || TestHandlerName != routerHandler.Name() {
+		t.Fail()
+	}
+}
+
+func TestGetHandler(t *testing.T) {
+	router := newTestCommandRouter()
+
+	handler, err := router.getHandler(TestHandlerName)
+	if err != nil {
+		t.Fail()
+	}
+
+	if TestHandlerName != handler.Name() {
 		t.Fail()
 	}
 }

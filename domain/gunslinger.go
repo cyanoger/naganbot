@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"context"
 	"github.com/google/uuid"
 	"time"
 )
@@ -11,6 +12,12 @@ type Gunslinger struct {
 	Player      User
 	JoinedAt    time.Time
 	ShotHimself bool
+}
+
+type GunslingerRepository interface {
+	GetById(context.Context, uuid.UUID) (Gunslinger, error)
+	Store(context.Context, *Gunslinger) error
+	Update(context.Context, *Gunslinger) error
 }
 
 func NewGunslinger(game Game, player User) Gunslinger {

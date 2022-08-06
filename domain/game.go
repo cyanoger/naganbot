@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"context"
 	"database/sql"
 	"github.com/google/uuid"
 	"time"
@@ -13,6 +14,12 @@ type Game struct {
 	Gunslingers []Gunslinger
 	CreatedAt   time.Time
 	PlayedAt    sql.NullTime
+}
+
+type GameRepository interface {
+	GetById(context.Context, uuid.UUID) (Game, error)
+	Store(context.Context, *Game) error
+	Update(context.Context, *Game) error
 }
 
 func NewGame(chat Chat, owner User) Game {
